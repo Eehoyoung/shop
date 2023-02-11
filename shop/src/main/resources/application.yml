@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shop?serverTime=Asia/Seoul
+    username: root
+    password: cv93523827!!
+  devtools:
+    livereload:
+      enabled: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: C:/imgDir
+logging:
+  level:
+    org.springframework: INFO
+
+server:
+  max-http-header-size: 40000
+  port: 9090
+
