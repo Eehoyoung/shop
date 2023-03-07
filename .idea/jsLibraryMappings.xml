@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$/shop/build/generated/querydsl" libraries="{all, e6f78261b2, postcode.v2}" />
+    <file url="file://$PROJECT_DIR$/shop/src/main" libraries="{all, e6f78261b2, postcode.v2}" />
+  </component>
+</project>

@@ -5,23 +5,21 @@ import com.example.shop.model.OrderItem;
 import com.example.shop.model.type.OrderStatus;
 import com.example.shop.repository.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class OrderItemServiceImpl implements OrderItemService {
 
-    @Autowired
-    OrderItemRepository orderItemRepository;
+
+    private final OrderItemRepository orderItemRepository;
 
     @Override
     public OrderItem findOrderItemById(Long id) {
-        OrderItem findOrderItem = orderItemRepository.findById(id).orElseThrow(
+        return orderItemRepository.findById(id).orElseThrow(
                 () -> new ItemNotFoundException("해당하는 상품이 존재하지 않습니다")
         );
-        return findOrderItem;
     }
 
     @Override

@@ -6,32 +6,26 @@ import com.example.shop.model.*;
 import com.example.shop.model.type.DeliveryStatus;
 import com.example.shop.model.type.OrderStatus;
 import com.example.shop.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
 
-    @Autowired
-     UserRepository userRepository;
-
-    @Autowired
-    OrderRepository orderRepository;
-
-    @Autowired
-    ItemRepository itemRepository;
-
-    @Autowired
-    OrderItemRepository orderItemRepository;
-
-    @Autowired
-    MileageRepository mileageRepository;
+    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final ItemRepository itemRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final MileageRepository mileageRepository;
 
     @Override
     public List<Order> findAllOrders()  {
@@ -40,25 +34,25 @@ public class OrderServiceImpl implements OrderService{
 
     @Transactional
     @Override
-    public Long doOrder(Long memberId, List<Long> itemId, List<Integer> count, PaymentAddressDto paymentAddressDto, PaymentPriceDto paymentPriceDto) {
-        Optional<User> findUser = userRepository.findById(memberId);
+    public Long doOrder(Long userId, List<Long> itemId, List<Integer> count, PaymentAddressDto paymentAddressDto, PaymentPriceDto paymentPriceDto) {
+        Optional<User> findUser = userRepository.findById(userId);
 
-        User checkedFindMember = new User();
+        User checkedFindUser = new User();
         if (findUser.isPresent()) {
-            checkedFindMember = findUser.get();
+            checkedFindUser = findUser.get();
         }
 
         Delivery delivery = new Delivery();
 
-        UserAddress memberAddress = new UserAddress();
-        memberAddress.setCity(paymentAddressDto.getCity());
-        memberAddress.setStreet(paymentAddressDto.getStreet());
-        memberAddress.setZipcode(paymentAddressDto.getZipcode());
-        delivery.setUserAddress(memberAddress);
+        UserAddress userAddress = new UserAddress();
+        userAddress.setCity(paymentAddressDto.getCity());
+        userAddress.setStreet(paymentAddressDto.getStreet());
+        userAddress.setZipcode(paymentAddressDto.getZipcode());
+        delivery.setUserAddress(userAddress);
         delivery.setDeliveryStatus(DeliveryStatus.READY);
 
         //배송 정보 생성
-        //delivery 객체를 만들 때 기본적 요소인 Member와 MemberAddress를 이용해서 만든다.
+        //delivery 객체를 만들 때 기본적 요소인 user와 UserAddress를 이용해서 만든다.
 
         List<OrderItem> checkedTestOrderItem = new ArrayList<>();
 
@@ -69,13 +63,13 @@ public class OrderServiceImpl implements OrderService{
             checkedTestOrderItem.add(testOrderItem);
         }
 
-        Order order = Order.createOrder(checkedFindMember, delivery, checkedTestOrderItem);
+        Order order = Order.createOrder(checkedFindUser, delivery, checkedTestOrderItem);
         order.setUsedMileagePrice(paymentPriceDto.getUsed_mileage());
 
         Mileage mileage = new Mileage();
         mileage.setMileageContent("구매 적립금");
         mileage.setMileagePrice(paymentPriceDto.getTobepaid_price() / 100);
-        mileage.setUser(checkedFindMember);
+        mileage.setUser(checkedFindUser);
 
         mileageRepository.save(mileage);
         orderRepository.save(order);

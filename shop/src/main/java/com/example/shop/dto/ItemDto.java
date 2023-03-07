@@ -1,13 +1,11 @@
 package com.example.shop.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class ItemDto {
     private Long id;
     private String itemName;

@@ -7,7 +7,6 @@ import com.example.shop.model.User;
 import com.example.shop.repository.MileageRepository;
 import com.example.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,9 @@ import java.util.List;
 @Service
 public class MileageServiceImpl implements MileageService{
 
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    MileageRepository mileageRepository;
+
+    private final UserRepository userRepository;
+    private final MileageRepository mileageRepository;
 
 
     @Override

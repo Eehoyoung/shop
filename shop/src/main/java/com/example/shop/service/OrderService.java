@@ -14,7 +14,7 @@ public interface OrderService {
     List<Order> findAllOrders();
 //    모든 주문내역 조회하는 메소드
 
-    Long doOrder(Long memberId, List<Long> itemId, List<Integer> count, PaymentAddressDto paymentAddressDto, PaymentPriceDto paymentPriceDto);
+    Long doOrder(Long userId, List<Long> itemId, List<Integer> count, PaymentAddressDto paymentAddressDto, PaymentPriceDto paymentPriceDto);
 //    주문 기능 메소드
 
     void cancelOrder(Long orderId);

@@ -17,9 +17,9 @@ public class CartDto {
     private int price;
 
     @QueryProjection
-    public CartDto(Long basketId, int basketCount, Long itemId, String itemName, String color, String imgUrl, int price) {
-        this.cartId = basketId;
-        this.cartCount = basketCount;
+    public CartDto(Long cartId, int cartCount, Long itemId, String itemName, String color, String imgUrl, int price) {
+        this.cartId = cartId;
+        this.cartCount = cartCount;
         this.itemId = itemId;
         this.itemName = itemName;
         this.color = color;

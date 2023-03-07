@@ -1,18 +1,18 @@
 package com.example.shop.service;
 
-import com.example.shop.dto.UserInfoDto;
-import com.example.shop.dto.UserPageDto;
 import com.example.shop.dto.MyPageDto;
 import com.example.shop.dto.ProfileDto;
-import com.example.shop.model.User;
+import com.example.shop.dto.UserInfoDto;
+import com.example.shop.dto.UserPageDto;
 import com.example.shop.model.SearchUser;
+import com.example.shop.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
     User findUserById(Long id);
-    //PK를 이용하여 Member검색
+    //PK를 이용하여 회원검색
 
     User findUserByLoginId(String loginId);
 
@@ -20,7 +20,7 @@ public interface UserService {
     //회원가입
 
     void updateUserInfo(String loginId, ProfileDto profileDto);
-    //Member 개인정보 수정
+    //회원정보 수정
 
     Long changePw(Long id, String pw);
     //PW 변경
@@ -38,7 +38,7 @@ public interface UserService {
 
     ProfileDto showUserInfoDetail(String longinId); //개인상세 정보 표시
 
-    Page<User> findUserAll(Pageable pageable);
+    Page<User> findUserAllCreatedAt(Pageable pageable);
 
     UserPageDto findAllUserByPaging(Pageable pageable);
 

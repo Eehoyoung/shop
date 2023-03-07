@@ -138,7 +138,7 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
     }
 
     @Override
-    public ItemDto findAllItemInBasket(Long itemId) {
+    public ItemDto findAllItemInCart(Long itemId) {
         ItemDto results = queryFactory
                 .select(new QItemDto(
                         QItem.item.itemIdx,

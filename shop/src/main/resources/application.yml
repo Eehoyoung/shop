@@ -4,9 +4,9 @@ spring:
     url: jdbc:mysql://localhost:3306/shop?serverTime=Asia/Seoul
     username: root
     password: cv93523827!!
-  devtools:
-    livereload:
-      enabled: true
+#  devtools:
+#    livereload:
+#      enabled: true
   mvc:
     hiddenmethod:
       filter:
@@ -25,7 +25,7 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
-      location: C:/imgDir
+      location: C:/shopImg
 logging:
   level:
     org.springframework: INFO

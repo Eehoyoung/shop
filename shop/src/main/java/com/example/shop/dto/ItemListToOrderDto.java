@@ -11,6 +11,6 @@ import java.util.List;
 @Data
 public class ItemListToOrderDto {
 
-    private List<Long> itemLIst;
+    private List<Long> itemList;
     private List<Integer> itemCountList;
 }

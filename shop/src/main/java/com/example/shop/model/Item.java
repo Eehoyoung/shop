@@ -1,20 +1,16 @@
 package com.example.shop.model;
 
 import com.example.shop.exception.NotEnoughStackException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Getter
+@Setter
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,5 +66,23 @@ public class Item {
         }else {
             this.stackQuantity = resultStack;
         }
+    }
+
+    public Item(String firstCategory, String secondCategory, String thirdCategory, String itemName, int price, String itemInfo, String color, String fabric, String model, String size, int stockQuantity, String imgUrl, String saleStatus, Long itemIdx, Boolean rep) {
+        this.firstCategory = firstCategory;
+        this.secondCategory = secondCategory;
+        this.thirdCategory = thirdCategory;
+        this.itemName = itemName;
+        this.price = price;
+        this.itemInfo = itemInfo;
+        this.color = color;
+        this.favric = fabric;
+        this.model = model;
+        this.size = size;
+        this.stackQuantity = stockQuantity;
+        this.imgUrl = imgUrl;
+        this.saleStatus = saleStatus;
+        this.itemIdx = itemIdx;
+        this.rep = rep;
     }
 }

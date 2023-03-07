@@ -3,9 +3,8 @@ package com.example.shop.dto;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class WeeklyBestDto {
     private Long itemIdx;
     private String itemName;

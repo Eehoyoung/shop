@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 @Data
 public class ItemPageDto {
 
-    Page<ItemDto> itemboards;
+    Page<ItemDto> itemPage;
     int homeStartPage;
     int homeEndPage;
 }

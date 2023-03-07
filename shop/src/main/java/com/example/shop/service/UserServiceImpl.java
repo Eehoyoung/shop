@@ -3,13 +3,12 @@ package com.example.shop.service;
 import com.example.shop.dto.*;
 import com.example.shop.exception.NotFoundLoginIdException;
 import com.example.shop.exception.unSaveIdException;
+import com.example.shop.model.SearchUser;
 import com.example.shop.model.User;
 import com.example.shop.model.UserAddress;
-import com.example.shop.model.SearchUser;
 import com.example.shop.model.type.UserGrade;
 import com.example.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -30,8 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public User findUserById(Long id) {
@@ -122,6 +119,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void deleteUser(String loginId) {
         userRepository.deleteByLoginId(loginId);
     }
+    //회원탈퇴
 
     @Transactional
     @Override
@@ -162,7 +160,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Page<User> findUserAll(Pageable pageable) {
+    public Page<User> findUserAllCreatedAt(Pageable pageable) {
         return userRepository.findAllByOrderByCreatedAt(pageable);
     }
 

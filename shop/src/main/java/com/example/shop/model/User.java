@@ -7,11 +7,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class User extends BaseTimeEntity {
 
     @Id

@@ -1,10 +1,8 @@
 package com.example.shop.model;
 
 import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class SearchOrder {
     private String firstdate;
     private String lastdate;

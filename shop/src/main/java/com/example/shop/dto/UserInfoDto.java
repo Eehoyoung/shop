@@ -4,9 +4,10 @@ package com.example.shop.dto;
 import com.example.shop.model.User;
 import lombok.*;
 
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class UserInfoDto {
     private Long id;
     private String loginId;
