@@ -1,7 +1,9 @@
 package com.example.shop.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -20,7 +22,7 @@ public class ItemDto {
     private int cartConunt;
 
     @QueryProjection
-    public ItemDto(Long id, String itemName, String firstCategory, int price, String saleStatus, String imgUrl, String color, boolean rep, Long itemIdx){
+    public ItemDto(Long id, String itemName, String firstCategory, int price, String saleStatus, String imgUrl, String color, boolean rep, Long itemIdx) {
 
         this.id = id;
         this.itemName = itemName;
@@ -34,7 +36,7 @@ public class ItemDto {
     }
 
     @QueryProjection
-    public ItemDto(Long itemIdx, String itemName, String imgUrl, int price, String firstCategory, String secondCategory, String saleStatus, boolean rep){
+    public ItemDto(Long itemIdx, String itemName, String imgUrl, int price, String firstCategory, String secondCategory, String saleStatus, boolean rep) {
 
         this.itemName = itemName;
         this.firstCategory = firstCategory;
@@ -47,7 +49,7 @@ public class ItemDto {
     }
 
     @QueryProjection
-    public ItemDto(Long itemIdx, String imgUrl, String itemName, String color, int price, int cartConunt){
+    public ItemDto(Long itemIdx, String imgUrl, String itemName, String color, int price, int cartConunt) {
         this.itemName = itemName;
         this.price = price;
         this.imgUrl = imgUrl;

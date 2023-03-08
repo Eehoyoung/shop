@@ -12,9 +12,11 @@ public interface MileageService {
     //전체 마일리지 조회
 
     int usedMileage(String loginId);
-//    사용한 마일리지 조회
+
+    //    사용한 마일리지 조회
     int availableMileage(int totalMileage, int usedMileage);
-//    사용 가능한 마일리지 조회
+
+    //    사용 가능한 마일리지 조회
     List<Mileage> MileageDetail(String loginId);
 //  해당 회원의 마일리지 상세 조회
 

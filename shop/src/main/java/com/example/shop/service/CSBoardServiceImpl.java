@@ -28,7 +28,7 @@ public class CSBoardServiceImpl implements CSBoardService {
     @Transactional
     @Override
     public Page<CustomServiceBoard> findByTitle(String title, Pageable pageable) {
-        return csBoardRepository.findByTitleContaining(title,pageable);
+        return csBoardRepository.findByTitleContaining(title, pageable);
     }
 
     @Transactional
@@ -41,7 +41,7 @@ public class CSBoardServiceImpl implements CSBoardService {
     @Override
     public CustomServiceBoard findCSboardByid(int id) {
         return csBoardRepository.findById(id).orElseThrow(
-                () ->  new RuntimeException("해당 게시글을 찾을수 없습니다.")
+                () -> new RuntimeException("해당 게시글을 찾을수 없습니다.")
         );
     }
 

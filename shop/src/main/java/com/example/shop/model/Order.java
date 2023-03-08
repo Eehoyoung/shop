@@ -1,7 +1,7 @@
 package com.example.shop.model;
 
-import com.example.shop.model.type.DeliveryStatus;
 import com.example.shop.exception.DeliveryException;
+import com.example.shop.model.type.DeliveryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,21 +45,6 @@ public class Order extends BaseTimeEntity {
     @ColumnDefault("100")
     private int usedMileagePrice;
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getOrderList().add(this);
-    }
-
-    public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
-        delivery.setOrder(this);
-    }
-
-    public void addOrderItem(OrderItem orderItem) {
-        orderItemList.add(orderItem);
-        orderItem.setOrder(this);
-    }
-
     // 생성 메소드
     public static Order createOrder(User user, Delivery delivery, List<OrderItem> orderItems) {
         Order order = new Order();
@@ -74,6 +59,21 @@ public class Order extends BaseTimeEntity {
         order.setTotalPrice(order.getCalTotalPrice());
 
         return order;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getOrderList().add(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItemList.add(orderItem);
+        orderItem.setOrder(this);
     }
 
     /* 비즈니스 로직 */

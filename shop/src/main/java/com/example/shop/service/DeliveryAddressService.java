@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DeliveryAddressService {
 
-//    주소 등록
+    //    주소 등록
     void UserAddres(String loginId, AddressDto addressDto);
 
     DeliveryAddress findAddressById(Long id);

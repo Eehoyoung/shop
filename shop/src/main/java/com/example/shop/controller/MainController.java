@@ -1,9 +1,14 @@
 package com.example.shop.controller;
 
 import com.example.shop.dto.*;
-import com.example.shop.model.*;
+import com.example.shop.model.Item;
+import com.example.shop.model.SearchItem;
+import com.example.shop.model.SearchOrder;
 import com.example.shop.model.type.OrderStatus;
-import com.example.shop.service.*;
+import com.example.shop.service.ItemServiceImpl;
+import com.example.shop.service.MileageServiceImpl;
+import com.example.shop.service.OrderItemServiceImpl;
+import com.example.shop.service.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +28,6 @@ public class MainController {
     private final MileageServiceImpl mileageServiceImpl;
     private final OrderServiceImpl orderServiceImpl;
     private final ItemServiceImpl itemServiceImpl;
-
 
 
     @GetMapping("main/order")
@@ -100,7 +104,6 @@ public class MainController {
     }
 
 
-
     @GetMapping("/main/index")
     public String getMainPage(Model model) {
         List<Item> mainCarouselList = itemServiceImpl.MainCarouselItemList();
@@ -132,11 +135,11 @@ public class MainController {
     }
 
     @GetMapping("/search/list")
-    public String searchItem(Model model, @PageableDefault(size = 10) Pageable pageable, SearchItem searchItem){
+    public String searchItem(Model model, @PageableDefault(size = 10) Pageable pageable, SearchItem searchItem) {
         new ItemPageDto();
         ItemPageDto itemPageDto;
 
-        if(searchItem.getSearchItemKeyword() == null){
+        if (searchItem.getSearchItemKeyword() == null) {
             itemPageDto = itemServiceImpl.findAllItemByPaging(pageable);
         } else {
             itemPageDto = itemServiceImpl.findAllItemByConditionByPaging(searchItem, pageable);
@@ -151,14 +154,14 @@ public class MainController {
         model.addAttribute("ItemList", itemBoards);
         model.addAttribute("searchCondition", searchItem.getSearchItemCondition());
         model.addAttribute("searchKeyword", searchItem.getSearchItemKeyword());
-        model.addAttribute("Salestatus",searchItem.getSalestatus());
+        model.addAttribute("Salestatus", searchItem.getSalestatus());
 
         return "main/itmeList1";
 
     }
 
     @GetMapping("/search/list/item/{id}")
-    public String pageItem(@PathVariable Long id, Model model){
+    public String pageItem(@PathVariable Long id, Model model) {
         model.addAttribute("Item", itemServiceImpl.findItemById(id));
 
         return "main/itemList2";

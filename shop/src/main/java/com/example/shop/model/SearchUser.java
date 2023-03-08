@@ -1,6 +1,7 @@
 package com.example.shop.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter

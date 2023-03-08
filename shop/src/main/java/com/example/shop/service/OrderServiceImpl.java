@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService{
     private final MileageRepository mileageRepository;
 
     @Override
-    public List<Order> findAllOrders()  {
+    public List<Order> findAllOrders() {
         return orderRepository.findAll();
     }
 

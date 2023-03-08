@@ -2,7 +2,10 @@ package com.example.shop.dto;
 
 
 import com.example.shop.model.User;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter

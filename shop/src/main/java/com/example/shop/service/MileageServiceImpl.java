@@ -15,7 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class MileageServiceImpl implements MileageService{
+public class MileageServiceImpl implements MileageService {
 
 
     private final UserRepository userRepository;
@@ -28,7 +28,7 @@ public class MileageServiceImpl implements MileageService{
 
         int totalMileage = 0;
 
-        for(int i=0; i<user.getMileageList().size(); i++){
+        for (int i = 0; i < user.getMileageList().size(); i++) {
             totalMileage += user.getMileageList().get(i).getMileagePrice();
             System.out.println(totalMileage);
         }
@@ -41,7 +41,7 @@ public class MileageServiceImpl implements MileageService{
 
         int usedMileage = 0;
 
-        for(int i=0; i<user.getOrderList().size(); i++){
+        for (int i = 0; i < user.getOrderList().size(); i++) {
             usedMileage += user.getOrderList().get(i).getUsedMileagePrice();
         }
 
@@ -50,7 +50,7 @@ public class MileageServiceImpl implements MileageService{
 
     @Override
     public int availableMileage(int totalMileage, int usedMileage) {
-        return totalMileage-usedMileage;
+        return totalMileage - usedMileage;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MileageServiceImpl implements MileageService{
         User findUser = userRepository.findByloginId(loginId).orElseThrow(
                 () -> new NotFoundLoginIdException("해당하는 회원이 존재하지 않습니다")
         );
-        Page<Mileage> mileageBoards = mileageRepository.findAllByUser(findUser,pageable);
+        Page<Mileage> mileageBoards = mileageRepository.findAllByUser(findUser, pageable);
         int homeStartPage = Math.max(1, mileageBoards.getPageable().getPageNumber() - 4);
         int homeEndPage = Math.min(mileageBoards.getTotalPages(), mileageBoards.getPageable().getPageNumber() + 4);
 

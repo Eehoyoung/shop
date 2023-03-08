@@ -24,7 +24,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final CartRepository cartRepository;
@@ -309,6 +309,7 @@ public class ItemServiceImpl implements ItemService{
 
         return newArrivalList;
     }
+
     @Override
     public Page<ItemDto> findAllItem(Pageable pageable) {
         return itemRepository.searchAllItem(pageable);

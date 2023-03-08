@@ -35,16 +35,11 @@ public class OrderItem {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    public void setItem(Item item){
-        this.item = item;
-        item.getOrderItemList().add(this);
-    }
-
     //생성 메소드
-    public static OrderItem createOrderItem(Item item, int orderPrice, int count){
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
-        orderItem.setOrderPrice(orderPrice *  count);
+        orderItem.setOrderPrice(orderPrice * count);
         orderItem.setCount(count);
 
         item.minusStackQuantity(count);
@@ -52,11 +47,17 @@ public class OrderItem {
         return orderItem;
     }
 
+    public void setItem(Item item) {
+        this.item = item;
+        item.getOrderItemList().add(this);
+    }
+
     //비즈니스 로직
-    public void itemCancel(){
+    public void itemCancel() {
         this.getItem().plusStackQuantity(count);
     } //주문 취소 시 물량 복구
-    public int getCalPrice(){
+
+    public int getCalPrice() {
         return this.getOrderPrice() * this.getCount();
     } // 전체 가격 조회
 }

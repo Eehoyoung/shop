@@ -1,7 +1,10 @@
 package com.example.shop.model;
 
 import com.example.shop.model.type.UserGrade;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;

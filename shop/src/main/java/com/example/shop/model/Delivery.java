@@ -1,7 +1,10 @@
 package com.example.shop.model;
 
 import com.example.shop.model.type.DeliveryStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

@@ -1,6 +1,7 @@
 package com.example.shop.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

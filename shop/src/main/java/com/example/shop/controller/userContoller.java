@@ -33,30 +33,30 @@ public class userContoller {
     public String login(HttpServletRequest req, @RequestParam(value = "error", required = false) String error, Model model) {
 
         String session = req.getHeader("Referer");
-        if(session != null){
-            req.getSession().setAttribute("prevPage" , session);
-        }else {
+        if (session != null) {
+            req.getSession().setAttribute("prevPage", session);
+        } else {
             session = "http://localhost:9090/main/index";
             req.getSession().setAttribute("prevPage", session);
         }
         model.addAttribute("error", error);
-        return  "main/login";
+        return "main/login";
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) throws Exception{
+    public String logout(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         session.invalidate();
         return "redirect:/main/index";
     }
 
     @GetMapping("main/join")
-    public String join(){
+    public String join() {
         return "main/join";
     }
 
     @PostMapping("main/join")
-    public String join(UserInfoDto userInfoDto){
+    public String join(UserInfoDto userInfoDto) {
         Long userId = userServiceImpl.joinUser(userInfoDto);
         mileageServiceImpl.joinMileage(userId);
 
@@ -64,7 +64,7 @@ public class userContoller {
     }
 
     @GetMapping("/defaultUrl")
-    public String defaultUrl(HttpServletRequest req){
+    public String defaultUrl(HttpServletRequest req) {
         req.getHeader("Referer");
         String session;
 

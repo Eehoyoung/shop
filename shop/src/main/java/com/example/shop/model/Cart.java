@@ -30,12 +30,12 @@ public class Cart {
     @ColumnDefault("1")
     private int cartCount;
 
-    public void setItem(Item item){
+    public void setItem(Item item) {
         this.item = item;
         item.getCartList().add(this);
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
         this.user = user;
         user.getCartList().add(this);
     }

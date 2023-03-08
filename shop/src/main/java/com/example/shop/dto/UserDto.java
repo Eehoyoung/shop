@@ -3,7 +3,8 @@ package com.example.shop.dto;
 
 import com.example.shop.model.type.UserGrade;
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 

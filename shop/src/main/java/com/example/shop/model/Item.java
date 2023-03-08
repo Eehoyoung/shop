@@ -1,7 +1,9 @@
 package com.example.shop.model;
 
 import com.example.shop.exception.NotEnoughStackException;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -55,19 +57,6 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Cart> cartList = new ArrayList<>();
 
-    public void plusStackQuantity(int plusQuantity) {
-        this.stackQuantity += plusQuantity;
-    }
-
-    public void minusStackQuantity(int minusQuantity){
-        int resultStack = this.stackQuantity - minusQuantity;
-        if(resultStack < 0) {
-            throw new NotEnoughStackException("재고가 없습니다.");
-        }else {
-            this.stackQuantity = resultStack;
-        }
-    }
-
     public Item(String firstCategory, String secondCategory, String thirdCategory, String itemName, int price, String itemInfo, String color, String fabric, String model, String size, int stockQuantity, String imgUrl, String saleStatus, Long itemIdx, Boolean rep) {
         this.firstCategory = firstCategory;
         this.secondCategory = secondCategory;
@@ -84,5 +73,18 @@ public class Item {
         this.saleStatus = saleStatus;
         this.itemIdx = itemIdx;
         this.rep = rep;
+    }
+
+    public void plusStackQuantity(int plusQuantity) {
+        this.stackQuantity += plusQuantity;
+    }
+
+    public void minusStackQuantity(int minusQuantity) {
+        int resultStack = this.stackQuantity - minusQuantity;
+        if (resultStack < 0) {
+            throw new NotEnoughStackException("재고가 없습니다.");
+        } else {
+            this.stackQuantity = resultStack;
+        }
     }
 }

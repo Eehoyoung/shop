@@ -107,7 +107,7 @@ public class AdminController {
 
 
             String upperFirstCategory = firstCategory.toUpperCase(Locale.ROOT);
-            String newUrl = "/image/Item/" + upperFirstCategory + "/" +  secondCategory  + "/" + itemName + "/" + originFileName;
+            String newUrl = "/image/Item/" + upperFirstCategory + "/" + secondCategory + "/" + itemName + "/" + originFileName;
 
             Item item = new Item(firstCategory, secondCategory, thirdCategory, itemName, itemPrice, itemInfo, itemColor, itemFabric, itemModel, itemSize, itemQuantity, newUrl, saleStatus, newItemIdx + 1, true);
 

@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public Long changePw(Long id, String pw){
+    public Long changePw(Long id, String pw) {
         User user = findUserById(id);
         user.setPassword(pw);
         return user.getId();
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     //계정 상세 정보
     @Override
     public ProfileDto showUserInfoDetail(String loginId) {
-        ProfileDto profileDto =new ProfileDto();
+        ProfileDto profileDto = new ProfileDto();
         User findUser = userRepository.findByloginId(loginId).orElseThrow(
                 () -> new NotFoundLoginIdException("해당 회원을 찾을 수 없습니다.")
         );
