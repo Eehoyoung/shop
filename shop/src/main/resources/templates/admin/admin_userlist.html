@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>admin userlist</title>
-    <script src="https://kit.fontawesome.com/e6f78261b2.js" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/e6f78261b2.js"></script>
     <script src="/js/jquery.js"></script>
-    <link rel="stylesheet" href="/css/admin/admin_userlist.css">
-    <link rel="stylesheet" href="/css/admin/admin_nav.css">
+    <link href="/css/admin/admin_userlist.css" rel="stylesheet">
+    <link href="/css/admin/admin_nav.css" rel="stylesheet">
 </head>
 <body>
 <nav th:replace="admin/admin_nav :: navFragment"></nav>
 <section>
-    <form class= "search-form" id="search-form" method="GET" th:action="@{/admin/userList}">
+    <form class="search-form" id="search-form" method="GET" th:action="@{/admin/userList}">
         <label>
-            <select name="searchCondition" class="search-mode search-item" form="search-form">
+            <select class="search-mode search-item" form="search-form" name="searchCondition">
                 <option value="userid">아이디</option>
                 <option value="username">이름</option>
                 <option value="phone">휴대전화</option>
@@ -26,9 +26,9 @@
             </select>
         </label>
         <label>
-            <input type="text" name="searchKeyword" class="search-input search-item">
+            <input class="search-input search-item" name="searchKeyword" type="text">
         </label>
-        <input type="submit" class="search-submit search-item" value="검색">
+        <input class="search-submit search-item" type="submit" value="검색">
     </form>
     <div class="user-box">
         <div class="num-searched-box">
@@ -38,7 +38,7 @@
             <thead>
             <tr>
                 <th><label>
-                    <input type="checkbox" class="checkbox-selectall">
+                    <input class="checkbox-selectall" type="checkbox">
                 </label></th>
                 <th>기본정보</th>
                 <th>등급</th>
@@ -54,18 +54,20 @@
             <tbody>
             <tr th:each="user : ${userList}">
                 <td><label>
-                    <input type="checkbox" class="checkbox-select">
+                    <input class="checkbox-select" type="checkbox">
                 </label></td>
-                <td th:text = "${user.name} + '(' + ${user.loginId}+ ')'"></td>
-                <td th:text = "${user.userGrade}">일반회원</td>
-                <td th:text = "${#strings.replace(user.phoneNumber, ',', '-')}"></td>
-                <td th:text = "${user.visitCount}">11</td>
-                <td th:text = "${user.orderCount}">2</td>
+                <td th:text="${user.name} + '(' + ${user.loginId}+ ')'"></td>
+                <td th:text="${user.userGrade}">일반회원</td>
+                <td th:text="${#strings.replace(user.phoneNumber, ',', '-')}"></td>
+                <td th:text="${user.visitCount}">11</td>
+                <td th:text="${user.orderCount}">2</td>
                 <td>2000원</td>
                 <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}"></td>
-                <td><input type="button" value="보기" class="userdetailbtn table-btn" th:onclick="|openUserDetail('${user.id}')|"></td>
-                <td><input type="button" value="삭제" class="deletebtn table-btn" th:onclick="|deleteUser('${user.id}')|"></td>
-                <input type="hidden" th:value="${user.id}">
+                <td><input class="userdetailbtn table-btn" th:onclick="|openUserDetail('${user.id}')|" type="button"
+                           value="보기"></td>
+                <td><input class="deletebtn table-btn" th:onclick="|deleteUser('${user.id}')|" type="button" value="삭제">
+                </td>
+                <input th:value="${user.id}" type="hidden">
             </tr>
             </tbody>
 
@@ -73,22 +75,29 @@
         </table>
 
         <div class="bottombtn-box">
-            <input type="button" value="전체선택" class="selectallbtn bottombtn" th:onclick="|checkall()|">
-            <input type="button" value="선택삭제" class="bottom-deletebtn bottombtn" th:onclick="|deleteCheckedUsers()|">
+            <input class="selectallbtn bottombtn" th:onclick="|checkall()|" type="button" value="전체선택">
+            <input class="bottom-deletebtn bottombtn" th:onclick="|deleteCheckedUsers()|" type="button" value="선택삭제">
 
         </div>
         <!-- 여기 수정 -->
         <div class="paginate">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${1 == userList.pageable.pageNumber + 1} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/admin/userList(page=${userList.pageable.pageNumber - 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}" tabindex="-1" aria-disabled="true">Previous</a>
+                    <a aria-disabled="true" class="page-link"
+                       href="#"
+                       tabindex="-1" th:href="@{/admin/userList(page=${userList.pageable.pageNumber - 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}">Previous</a>
                 </li>
 
-                <li class="page-item" th:classappend="${i == userList.pageable.pageNumber + 1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                    <a class="page-link" href="#" th:href="@{/admin/userList(page=${i - 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}" th:text="${i}">1</a></li>
+                <li class="page-item" th:classappend="${i == userList.pageable.pageNumber + 1} ? 'disabled'"
+                    th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#"
+                       th:href="@{/admin/userList(page=${i - 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}"
+                       th:text="${i}">1</a></li>
 
-                <li class="page-item" th:classappend="${userList.totalPages == userList.pageable.pageNumber + 1} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/admin/userList(page=${userList.pageable.pageNumber + 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}">Next</a>
+                <li class="page-item"
+                    th:classappend="${userList.totalPages == userList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#"
+                       th:href="@{/admin/userList(page=${userList.pageable.pageNumber + 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}">Next</a>
                 </li>
             </ul>
         </div>

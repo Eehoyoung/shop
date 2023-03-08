@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav th:fragment="navFragment">
     <div class="side-title"><a href="#">관리자 모드</a></div>
     <ul class="side-menu">
@@ -13,7 +13,7 @@
             </ul>
         </li>
         <li><a href='#' th:href="@{/admin/orderList}">주문관리</a></li>
-<!--        <li><a href='#' th:href="@{/admin/operation}">운영설정</a></li>-->
+        <!--        <li><a href='#' th:href="@{/admin/operation}">운영설정</a></li>-->
         <li><a href='#' th:href="@{/admin/changepw}">관리자 정보수정</a></li>
         <li><a href='#' th:href="@{/logout}">LOGOUT</a></li>
     </ul>
