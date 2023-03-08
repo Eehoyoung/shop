@@ -1,5 +1,6 @@
 package com.example.shop.controller;
 
+import com.example.shop.controller.config.SecurityConfig;
 import com.example.shop.dto.MyPageDto;
 import com.example.shop.dto.MyPageOrderStatusDto;
 import com.example.shop.dto.ProfileDto;
@@ -10,6 +11,7 @@ import com.example.shop.service.OrderServiceImpl;
 import com.example.shop.service.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ public class userContoller {
     private final MileageServiceImpl mileageServiceImpl;
 
     private final OrderServiceImpl orderServiceImpl;
+
+    private final SecurityConfig securityConfig;
 
     @ApiOperation("로그인")
     @GetMapping("/main/login")
@@ -132,6 +136,63 @@ public class userContoller {
         } else {
             return "사용할 수 있는 아이디입니다.";
         }
+    }
+
+    @GetMapping("/account/search_id")
+    public String SearchId(HttpServletRequest request, Model model, User search) {
+        return "main/search_id";
+    }
+
+    @GetMapping("/account/search_pw")
+    public String SearchPw(HttpServletRequest request, Model model, User search) {
+        return "main/search_pw";
+    }
+
+    @PostMapping(value = "/account/search_result_id")
+    public String SearchIdResult(HttpServletRequest request, Model model,
+                                 @RequestParam(required = true, value = "name") String name,
+                                 @RequestParam(required = true, value = "phoneNumber") String phoneNumber, User search) {
+        try {
+            search.setName(name);
+            search.setPhoneNumber(phoneNumber);
+            User userSearch = userServiceImpl.userIdSearch(search);
+
+            model.addAttribute("search", userSearch);
+
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            model.addAttribute("msg", "오류 발생");
+        }
+        return "main/search_result_id";
+    }
+
+    @PostMapping("/account/search_result_pw")
+    public String SearchPwResult(HttpServletRequest request, Model model,
+                                 @RequestParam(required = true, value = "name") String name,
+                                 @RequestParam(required = true, value = "phoneNumber") String phoneNumber,
+                                 @RequestParam(required = true, value = "loginId") String loginId, User search) {
+        try {
+            search.setName(name);
+            search.setPhoneNumber(phoneNumber);
+            search.setLoginId(loginId);
+            int userSearch = userServiceImpl.userPwSearch(search);
+            if (userSearch == 0) {
+                model.addAttribute("msg", "입력하신 정보를 다시 한번 확인해주세요.");
+                return "redirect:/account/search_pw";
+            }
+
+            String newPw = RandomStringUtils.randomAlphanumeric(10);
+            String enPw = String.valueOf(User.builder().password(newPw));
+            search.setPassword(enPw);
+            userServiceImpl.pwUpdate(search);
+            model.addAttribute("newPw", newPw);
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            model.addAttribute("msg", "오류가 발생 하였습니다.");
+        }
+        return "main/search_result_pwd";
     }
 
 

@@ -1,6 +1,6 @@
-package com.example.shop.config;
+package com.example.shop.controller.config;
 
-import com.example.shop.config.handler.CustomLoginSuccessHandler;
+import com.example.shop.controller.config.handler.CustomLoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +24,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

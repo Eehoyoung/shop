@@ -1,4 +1,4 @@
-package com.example.shop.config.handler;
+package com.example.shop.controller.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;

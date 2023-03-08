@@ -1,4 +1,4 @@
-package com.example.shop.config.handler;
+package com.example.shop.controller.config.handler;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;

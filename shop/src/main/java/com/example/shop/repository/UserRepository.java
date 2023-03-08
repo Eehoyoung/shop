@@ -18,4 +18,13 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
     int visitCountResult();
 
     void deleteByLoginId(String loginId);
+
+    @Query("select m.UserBuilder from User m where m.name = :name and m.phoneNumber = :phoneNumber")
+    User userIdSearch(User search);
+
+    @Query("select count(m.UserBuilder) from User m where m.name = :name and m.phoneNumber = :phoneNumber and m.loginId = :loginId")
+    int userPwCheck(User search);
+
+    @Query("update User m set m.password = :pw where m.name = :name and m.phoneNumber = :phoneNumber and m.loginId = :loginId")
+    void pwUpdate(User search);
 }

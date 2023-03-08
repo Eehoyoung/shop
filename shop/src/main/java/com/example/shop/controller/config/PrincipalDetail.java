@@ -1,4 +1,4 @@
-package com.example.shop.config;
+package com.example.shop.controller.config;
 
 import com.example.shop.model.User;
 import lombok.Data;

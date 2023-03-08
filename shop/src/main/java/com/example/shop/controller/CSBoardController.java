@@ -1,6 +1,6 @@
 package com.example.shop.controller;
 
-import com.example.shop.config.PrincipalDetail;
+import com.example.shop.controller.config.PrincipalDetail;
 import com.example.shop.model.CustomServiceBoard;
 import com.example.shop.model.type.UserGrade;
 import com.example.shop.service.CSBoardServiceImpl;

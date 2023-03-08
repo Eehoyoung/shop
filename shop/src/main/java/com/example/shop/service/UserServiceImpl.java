@@ -198,6 +198,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.visitCountResult();
     }
 
+    @Override
+    public User userIdSearch(User search) {
+        return userRepository.userIdSearch(search);
+    }
+
+    @Override
+    public int userPwSearch(User search) {
+        return userRepository.userPwCheck(search);
+    }
+
+    @Override
+    public void pwUpdate(User search) {
+        userRepository.pwUpdate(search);
+    }
+
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

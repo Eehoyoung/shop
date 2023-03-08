@@ -46,4 +46,10 @@ public interface UserService {
 
     int getVisitCount();
 //    전체 방문자 수 구하는 기능
+
+    User userIdSearch(User search);
+
+    int userPwSearch(User search);
+
+    void pwUpdate(User search);
 }
