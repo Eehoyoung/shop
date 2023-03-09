@@ -40,3 +40,5 @@ server:
       enabled: true
       force: true
 
+kakao:
+  key: 99464c317cd7882fee923fe9ebcfdafb

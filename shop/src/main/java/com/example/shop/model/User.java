@@ -1,5 +1,6 @@
 package com.example.shop.model;
 
+import com.example.shop.model.type.LoginType;
 import com.example.shop.model.type.UserGrade;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,6 +60,9 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Cart> cartList = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private LoginType loginType;
+
     public User(String name, String loginId, String password) {
         this.name = name;
         this.loginId = loginId;
@@ -66,7 +70,7 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(Long id, String loginId, String password, String name, String homePhoneNumber, String phoneNumber, String email, String birthday) {
+    public User(Long id, String loginId, String password, String name, String homePhoneNumber, String phoneNumber, String email, String birthday, UserGrade userGrade,LoginType loginType) {
         this.id = id;
         this.loginId = loginId;
         this.password = password;
@@ -75,6 +79,8 @@ public class User extends BaseTimeEntity {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.birthday = birthday;
+        this.userGrade = userGrade;
+        this.loginType = loginType;
     }
 
 

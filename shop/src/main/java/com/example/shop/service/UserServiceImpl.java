@@ -6,6 +6,7 @@ import com.example.shop.exception.unSaveIdException;
 import com.example.shop.model.SearchUser;
 import com.example.shop.model.User;
 import com.example.shop.model.UserAddress;
+import com.example.shop.model.type.LoginType;
 import com.example.shop.model.type.UserGrade;
 import com.example.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public User findUserById(Long id) {
@@ -212,6 +215,40 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void pwUpdate(User search) {
         userRepository.pwUpdate(search);
     }
+
+    @Transactional
+    @Override
+    public User checkLoginId(String loginId) {
+        return userRepository.findByLoginId(loginId).orElseGet(User::new);
+    }
+
+    @Transactional
+    @Override
+    public int saveUser(User user) {
+        try {
+            String rawPassword = user.getPassword();
+            String encPassword = encoder.encode(rawPassword);
+            user.setPhoneNumber(changePhoneNumFormat(user.getPhoneNumber()));
+            user.setPassword(encPassword);
+            if (!user.getName().startsWith("kakao_")) {
+                user.setLoginType(LoginType.ORIGIN);
+            }
+            user.setUserGrade(UserGrade.USER);
+            userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return 1;
+    }
+    private String changePhoneNumFormat(String phoneNum) {
+        if (phoneNum.length() != 11) {
+            return phoneNum;
+        }
+        return phoneNum.substring(0, 3) + "-" + phoneNum.subSequence(3, 7) + "-"
+                + phoneNum.subSequence(7, 11);
+    }
+
 
     @Transactional
     @Override

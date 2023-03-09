@@ -19,12 +19,14 @@ public interface UserRepository extends JpaRepository<User, Long>, UserRepositor
 
     void deleteByLoginId(String loginId);
 
-    @Query("select m.UserBuilder from User m where m.name = :name and m.phoneNumber = :phoneNumber")
+    @Query(value = "select m.UserBuilder from User m where m.name = :name and m.phoneNumber = :phoneNumber",nativeQuery = true)
     User userIdSearch(User search);
 
-    @Query("select count(m.UserBuilder) from User m where m.name = :name and m.phoneNumber = :phoneNumber and m.loginId = :loginId")
+    @Query(value = "select count(m.UserBuilder) from User m where m.name = :name and m.phoneNumber = :phoneNumber and m.loginId = :loginId", nativeQuery = true)
     int userPwCheck(User search);
 
-    @Query("update User m set m.password = :pw where m.name = :name and m.phoneNumber = :phoneNumber and m.loginId = :loginId")
+    @Query(value = "update User m set m.password = :pw where m.name = :name and m.phoneNumber = :phoneNumber and m.loginId = :loginId" ,nativeQuery = true)
     void pwUpdate(User search);
+
+    Optional<User> findByLoginId(String username);
 }

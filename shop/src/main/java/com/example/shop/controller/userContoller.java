@@ -1,21 +1,33 @@
 package com.example.shop.controller;
 
+import com.example.shop.controller.config.PrincipalDetailService;
 import com.example.shop.controller.config.SecurityConfig;
-import com.example.shop.dto.MyPageDto;
-import com.example.shop.dto.MyPageOrderStatusDto;
-import com.example.shop.dto.ProfileDto;
-import com.example.shop.dto.UserInfoDto;
+import com.example.shop.dto.*;
 import com.example.shop.model.User;
+import com.example.shop.model.type.LoginType;
+import com.example.shop.model.type.UserGrade;
 import com.example.shop.service.MileageServiceImpl;
 import com.example.shop.service.OrderServiceImpl;
 import com.example.shop.service.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,6 +43,14 @@ public class userContoller {
     private final OrderServiceImpl orderServiceImpl;
 
     private final SecurityConfig securityConfig;
+
+    private final AuthenticationManager authenticationManager;
+
+    final
+    PrincipalDetailService detailService;
+
+    @Value("${kakao.key}")
+    private String kakaoPassword;
 
     @ApiOperation("로그인")
     @GetMapping("/main/login")
@@ -193,6 +213,72 @@ public class userContoller {
             model.addAttribute("msg", "오류가 발생 하였습니다.");
         }
         return "main/search_result_pwd";
+    }
+
+    //카카오로그인
+    @GetMapping("/auth/kakao/login_proc")
+    public String kakaoCallback(@RequestParam String code) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        // 헤더
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", "99464c317cd7882fee923fe9ebcfdafb");
+        params.add("redirect_uri", "http://localhost:9090/auth/kakao/login_proc");
+        params.add("code", code);
+
+        HttpEntity<MultiValueMap<String, String>> tokenRequest = new HttpEntity<>(params,
+                headers);
+
+        ResponseEntity<OAuthToken> response = restTemplate.exchange("https://kauth.kakao.com/oauth/token",
+                HttpMethod.POST, tokenRequest, OAuthToken.class);
+
+        System.out.println(response);
+
+        RestTemplate kakaoUserInfoRestTemplate = new RestTemplate();
+
+        HttpHeaders kakaoUserInfoHeaders = new HttpHeaders();
+        kakaoUserInfoHeaders.add("Authorization", "Bearer " + response.getBody().getAccessToken());
+
+        HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(kakaoUserInfoHeaders);
+
+        ResponseEntity<KakaoProfile> kakaoUserInfoResponse = kakaoUserInfoRestTemplate.exchange(
+                "https://kapi.kakao.com/v2/user/me", HttpMethod.POST, kakaoUserInfoRequest, KakaoProfile.class);
+
+        KakaoProfile kakaoAccount = kakaoUserInfoResponse.getBody();
+        System.out.println(kakaoAccount);
+
+        User kakaoUser = User.builder().loginId("kakao_" + kakaoAccount.getProperties().getNickname())
+                .email(kakaoUserInfoResponse.getBody().getKakaoAccount().getEmail()).password(kakaoPassword)
+                .phoneNumber("폰 번호 재설정 필요").userGrade(UserGrade.USER).loginType(LoginType.KAKAO).build();
+
+        System.out.println("kakaoUser" + kakaoUser);
+
+        if (userServiceImpl.checkLoginId(kakaoUser.getLoginId()).getLoginId() == null) {
+            userServiceImpl.saveUser(kakaoUser);
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getLoginId(), kakaoPassword));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return "redirect:/kakao/auth/update/";
+        }
+
+        detailService.loadUserByUsername(kakaoUser.getLoginId());
+
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getLoginId(), kakaoPassword));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "redirect:/main/index";
+    }
+
+    @GetMapping("/kakao/user/update")
+    public String updateForm() {
+        return "main/update_user_form";
     }
 
 

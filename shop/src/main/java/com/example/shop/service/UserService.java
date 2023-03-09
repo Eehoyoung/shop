@@ -52,4 +52,8 @@ public interface UserService {
     int userPwSearch(User search);
 
     void pwUpdate(User search);
+
+    User checkLoginId(String username);
+
+    int saveUser(User user);
 }

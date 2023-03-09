@@ -5,8 +5,10 @@ import com.example.shop.dto.QUserDto;
 import com.example.shop.dto.UserDto;
 import com.example.shop.model.QUser;
 import com.example.shop.model.SearchUser;
+import com.example.shop.model.User;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -96,6 +98,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
         return new PageImpl<>(content, pageable, total);
     }
+
 
     private BooleanExpression loginIdEq(String loginIdCondition) {
         if (StringUtils.isEmpty(loginIdCondition)) {
