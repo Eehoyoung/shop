@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,13 +28,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+
+
+
+
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
     private final UserServiceImpl userServiceImpl;
     private final ItemServiceImpl itemServiceImpl;
     private final OrderServiceImpl orderServiceImpl;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     @GetMapping("/admin/changepw")
@@ -49,7 +53,6 @@ public class AdminController {
 
         findUser.setPassword(newPassword);
         userServiceImpl.changePw(findUser.getId(), passwordEncoder.encode(newPassword));
-
         return "Admin P/W Change OK";
     }
 

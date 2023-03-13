@@ -3,12 +3,14 @@ package com.example.shop.dto;
 import com.example.shop.model.type.OrderStatus;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class OrderDto {
     private Long id;
     private Long orderItemId;

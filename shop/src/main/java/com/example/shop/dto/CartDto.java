@@ -2,10 +2,12 @@ package com.example.shop.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class CartDto {
 
     private Long cartId;

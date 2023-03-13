@@ -165,7 +165,7 @@ public class userContoller {
 
     @GetMapping("/account/search_pw")
     public String SearchPw(HttpServletRequest request, Model model, User search) {
-        return "main/search_pw";
+        return "main/search_pwd";
     }
 
     @PostMapping(value = "/account/search_result_id")
@@ -192,6 +192,7 @@ public class userContoller {
                                  @RequestParam(required = true, value = "name") String name,
                                  @RequestParam(required = true, value = "phoneNumber") String phoneNumber,
                                  @RequestParam(required = true, value = "loginId") String loginId, User search) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
             search.setName(name);
             search.setPhoneNumber(phoneNumber);
@@ -202,8 +203,13 @@ public class userContoller {
                 return "redirect:/account/search_pw";
             }
 
+//            String newPw = RandomStringUtils.randomAlphanumeric(10);
+//            String enPw = String.valueOf(User.builder().password(newPw));
+//            search.setPassword(enPw);
+//            userServiceImpl.pwUpdate(search);
+//            model.addAttribute("newPw", newPw);
             String newPw = RandomStringUtils.randomAlphanumeric(10);
-            String enPw = String.valueOf(User.builder().password(newPw));
+            String enPw = passwordEncoder.encode(newPw);
             search.setPassword(enPw);
             userServiceImpl.pwUpdate(search);
             model.addAttribute("newPw", newPw);

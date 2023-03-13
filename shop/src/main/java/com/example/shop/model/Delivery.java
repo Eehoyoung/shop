@@ -1,18 +1,13 @@
 package com.example.shop.model;
 
 import com.example.shop.model.type.DeliveryStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
 @Entity
+@Getter
+@Setter
 public class Delivery extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

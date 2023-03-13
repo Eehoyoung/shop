@@ -4,13 +4,14 @@ package com.example.shop.dto;
 import com.example.shop.model.type.UserGrade;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
-
-@NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserDto {
     private Long id;
     private String name;

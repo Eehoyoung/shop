@@ -1,13 +1,10 @@
 package com.example.shop.dto;
 
 import com.example.shop.model.type.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class OrderInfo {
     private String name;
 

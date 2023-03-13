@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final BCryptPasswordEncoder encoder;
 
     @Override
     public User findUserById(Long id) {
@@ -225,9 +224,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     @Override
     public int saveUser(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
             String rawPassword = user.getPassword();
-            String encPassword = encoder.encode(rawPassword);
+            String encPassword = passwordEncoder.encode(rawPassword);
             user.setPhoneNumber(changePhoneNumFormat(user.getPhoneNumber()));
             user.setPassword(encPassword);
             if (!user.getName().startsWith("kakao_")) {

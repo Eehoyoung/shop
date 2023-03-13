@@ -1,15 +1,13 @@
 package com.example.shop.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
 @NoArgsConstructor
-@Data
-@Builder
 @Embeddable
+@Getter
+@Setter
 public class UserAddress {
     private String city;
     private String street;

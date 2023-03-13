@@ -1,13 +1,16 @@
 package com.example.shop.model;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@Data
+
 @Entity
+@Getter
+@Setter
 public class Mileage extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

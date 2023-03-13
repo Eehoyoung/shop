@@ -7,20 +7,21 @@ import com.example.shop.model.CustomServiceReply;
 import com.example.shop.model.type.CSBoardType;
 import com.example.shop.model.type.UserGrade;
 import com.example.shop.service.CSBoardServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class CSBoardApiController {
     private final CSBoardServiceImpl csBoardServiceImpl;
 
-    public CSBoardApiController(CSBoardServiceImpl csBoardServiceImpl) {
-        this.csBoardServiceImpl = csBoardServiceImpl;
-    }
+
 
     @PostMapping("/cs-write")
     public ResponseDto<Integer> writeBoard(@AuthenticationPrincipal PrincipalDetail principal, @RequestBody CustomServiceBoard serviceBoard) {

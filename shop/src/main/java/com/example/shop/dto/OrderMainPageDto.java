@@ -1,13 +1,10 @@
 package com.example.shop.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.Page;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class OrderMainPageDto {
     Page<MainPageOrderDto> mainPageOrderBoards;
     int homeStartPage;

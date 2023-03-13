@@ -2,10 +2,7 @@ package com.example.shop.model;
 
 import com.example.shop.exception.DeliveryException;
 import com.example.shop.model.type.DeliveryStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -15,10 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
+@Getter
+@Setter
 public class Order extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

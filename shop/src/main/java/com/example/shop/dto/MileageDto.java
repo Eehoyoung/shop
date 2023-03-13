@@ -1,12 +1,10 @@
 package com.example.shop.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class MileageDto {
     private Long id;
     private int mileagePrice;

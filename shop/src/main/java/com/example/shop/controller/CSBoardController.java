@@ -4,6 +4,7 @@ import com.example.shop.controller.config.PrincipalDetail;
 import com.example.shop.model.CustomServiceBoard;
 import com.example.shop.model.type.UserGrade;
 import com.example.shop.service.CSBoardServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -19,12 +20,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
+@RequiredArgsConstructor
 public class CSBoardController {
     private final CSBoardServiceImpl csBoardServiceImpl;
 
-    public CSBoardController(CSBoardServiceImpl csBoardServiceImpl) {
-        this.csBoardServiceImpl = csBoardServiceImpl;
-    }
 
     @GetMapping("/user/cs")
     public String intoCustomerService(

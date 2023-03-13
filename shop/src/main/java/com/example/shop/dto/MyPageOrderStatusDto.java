@@ -1,12 +1,9 @@
 package com.example.shop.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class MyPageOrderStatusDto {
     private int payWaitingNum;
     private int preShipNum;
@@ -15,5 +12,15 @@ public class MyPageOrderStatusDto {
     private int orderCancelNum;
     private int orderChangeNum;
     private int orderRefundNum;
+
+    public MyPageOrderStatusDto(int payWaitingNum, int preShipNum, int inShipNum, int completeShipNum, int orderCancelNum, int orderChangeNum, int orderRefundNum) {
+        this.payWaitingNum = payWaitingNum;
+        this.preShipNum = preShipNum;
+        this.inShipNum = inShipNum;
+        this.completeShipNum = completeShipNum;
+        this.orderCancelNum = orderCancelNum;
+        this.orderChangeNum = orderChangeNum;
+        this.orderRefundNum = orderRefundNum;
+    }
 
 }
