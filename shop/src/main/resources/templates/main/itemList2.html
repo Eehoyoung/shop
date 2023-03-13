@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Item Detail</title>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/e6f78261b2.js"></script>
+    <script src="/js/jquery.js"></script>
+    <link href="/css/admin/admin_nav.css" rel="stylesheet">
+    <link href="/css/admin/admin_user.css" rel="stylesheet">
+</head>
+<body>
+<div class="bottom">
+    <div class="bottombtn">
+        <input th:href="/main/product/${Item.getId()}" type="button" value="바로가기">
+    </div>
+</div>
+<script src="/js/admin/admin_nav.js"></script>
+</body>
+</html>

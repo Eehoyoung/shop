@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="/css/main/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/nav.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/change_address.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio&display=swap" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" rel="stylesheet">
+    <title>change address</title>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/main/header.js"></script>
+    <script src="/js/main/nav.js"></script>
+    <script src="/js/main/change_address.js"></script>
+
+</head>
+<body><!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="/css/main/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/nav.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/change_address.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio&display=swap" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" rel="stylesheet">
+    <title>change address</title>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/main/header.js"></script>
+    <script src="/js/main/nav.js"></script>
+    <script src="/js/main/change_address.js"></script>
+
+</head>
+<body>
+<!--header start-->
+<header th:replace="main/header :: main_headerFragment">
+</header>
+<!--header end-->
+
+<!--section-->
+<section>
+    <div class="section_caption">
+        ADDRESS
+    </div>
+    <div class="section_content">
+        <form action="/changeaddress_ok" method="POST" onsubmit="return sendit()" th:action="@{/main/changeaddress_ok}">
+            <input name="_method" type="hidden" value="put">
+            <table>
+                <colgroup>
+                    <col width="120px"/>
+                    <col width="auto"/>
+                </colgroup>
+                <tr>
+                    <th><label for="address_name">배송지명<span>＊</span></label></th>
+                    <td><input id="address_name" name="placeName" th:value="${address.placeName}" type="text"></td>
+                </tr>
+                <tr>
+                    <th><label for="address_recipient">성명<span>＊</span></label></th>
+                    <td><input id="address_recipient" name="recipient" th:value="${address.recipient}" type="text"></td>
+                </tr>
+                <tr>
+                    <th><label for="sample6_postcode">주소<span>＊</span></label></th>
+                    <td>
+                        <input id="sample6_postcode" name="zipcode" placeholder="우편번호" th:value="${address.zipcode}"
+                               type="text">
+                        <!-- form 안에 버튼이 있으면 default가 submit이기 때문에 type="button"으로 주어야한다.-->
+                        <button id="postbtn" onclick="sample6_execDaumPostcode()" type="button"><span>우편번호</span><i
+                                class="fas fa-chevron-right"></i></button>
+                        <br>
+                        <input class="address_margin" id="sample6_address" name="city" placeholder="주소"
+                               th:value="${address.city}"
+                               type="text"> 기본주소<br>
+                        <input class="address_margin" id="sample6_detailAddress" name="street" placeholder="상세주소"
+                               th:value="${address.streat}" type="text"> 나머지주소
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="address_home_number">일반전화<span>＊</span></label></th>
+                    <td>
+                        <select class="address_home_number" id="address_home_number" name="addressHomePhoneNumber[]">
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '02')}"
+                                    value="02">02
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '031')}"
+                                    value="031">031
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '032')}"
+                                    value="032">032
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '033')}"
+                                    value="033">033
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '041')}"
+                                    value="041">041
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '042')}"
+                                    value="042">042
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '043')}"
+                                    value="043">043
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '044')}"
+                                    value="044">044
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '051')}"
+                                    value="051">051
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '052')}"
+                                    value="052">052
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '053')}"
+                                    value="053">053
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '054')}"
+                                    value="054">054
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressHomePhoneNumber[0], '055')}"
+                                    value="055">055
+                            </option>
+                        </select>
+                        -
+                        <input class="address_home_number" name="addressHomePhoneNumber[]"
+                               th:value="${address.addressHomePhoneNumber[1]}"
+                               type="text">
+                        -
+                        <input class="address_home_number" name="addressHomePhoneNumber[]"
+                               th:value="${address.addressHomePhoneNumber[2]}"
+                               type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="address_phone_number">휴대전화<span>＊</span></label></th>
+                    <td>
+                        <select class="address_phone_number" id="address_phone_number" name="addressPhoneNumber[]">
+                            <option th:selected="${#strings.equals(address.addressPhoneNumber[0], '010')}" value="010">
+                                010
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressPhoneNumber[0], '011')}" value="011">
+                                011
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressPhoneNumber[0], '016')}" value="016">
+                                016
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressPhoneNumber[0], '017')}" value="017">
+                                017
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressPhoneNumber[0], '018')}" value="018">
+                                018
+                            </option>
+                            <option th:selected="${#strings.equals(address.addressPhoneNumber[0], '019')}" value="019">
+                                019
+                            </option>
+                        </select>
+                        -
+                        <input class="address_phone_number" name="addressPhoneNumber[]"
+                               th:value="${address.addressPhoneNumber[1]}"
+                               type="text">
+                        -
+                        <input class="address_phone_number" name="addressPhoneNumber[]"
+                               th:value="${address.addressPhoneNumber[2]}"
+                               type="text">
+                    </td>
+                </tr>
+            </table>
+
+            <input name="id" th:value="${address.id}" type="hidden">
+
+            <div class="bottombtn_box">
+                <input class="registerbtn bottombtn" type="submit" value="등록">
+                <button class="cancelbtn bottombtn" onclick="history.back()">취소</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!--nav-->
+<nav th:replace="main/nav :: main_navFragment">
+</nav>
+
+<!--footer-->
+<footer th:replace="main/footer :: main_footerFragment">
+</footer>
+
+<!--우편번호 api-->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if (data.userSelectedType === 'R') {
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if (extraAddr !== '') {
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_detailAddress").value = extraAddr;
+
+                } else {
+                    document.getElementById("sample6_detailAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
+</body>
+</html>
+</body>
+</html>

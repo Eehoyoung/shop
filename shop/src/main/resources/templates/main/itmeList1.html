@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>search itemlist</title>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/e6f78261b2.js"></script>
+    <script src="/js/jquery.js"></script>
+    <link href="/css/admin/admin_userlist.css" rel="stylesheet">
+    <link href="/css/admin/admin_nav.css" rel="stylesheet">
+</head>
+<body>
+<nav th:replace="main/nav :: navFragment"></nav>
+<section>
+    <form class="search-form" id="search-form" method="GET" th:action="@{/search/list}">
+        <label>
+            상품명
+        </label>
+        <label>
+            <input class="search-input search-item" name="searchItemKeyword" type="text">
+        </label>
+        <input class="search-submit search-item" type="submit" value="검색">
+    </form>
+    <div class="user-box">
+        <div class="num-searched-box">
+            총 <b class="num-searched"><span th:text="${ItemList.totalElements}"></span></b> 명의 상품이 검색되었습니다
+        </div>
+        <table class="user-table">
+            <thead>
+            <tr>
+                <th><label>
+                    <input class="checkbox-selectall" type="checkbox">
+                </label></th>
+                <th>상품 사진</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>판매유무</th>
+                <th>적립 마일리지</th>
+                <th>상세보기</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${ItemList}">
+                <td><label>
+                    <input class="checkbox-select" type="checkbox">
+                </label></td>
+                <td th:text="${item.imgUrl}"></td>
+                <td th:text="${item.itemName}">이쁜옷</td>
+                <td th:text="${item.price} + '원' ">40000</td>
+                <td th:text="${item.saleStatus}">SoldOut</td>
+                <td th:text="${item.price} * 0.1">4000</td>
+                <td><input class="userdetailbtn table-btn" th:href="@{/main/product/${item.id}}" type="button"
+                           value="보기"></td>
+                <input th:value="${item.id}" type="hidden">
+            </tr>
+            </tbody>
+
+
+        </table>
+        <div class="paginate">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${1 == ItemList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a aria-disabled="true" class="page-link"
+                       href="#"
+                       tabindex="-1"
+                       th:href="@{/search/list(page=${ItemList.pageable.pageNumber - 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}">Previous</a>
+                </li>
+
+                <li class="page-item" th:classappend="${i == ItemList.pageable.pageNumber + 1} ? 'disabled'"
+                    th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#"
+                       th:href="@{/search/list(page=${i - 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}"
+                       th:text="${i}">1</a></li>
+
+                <li class="page-item"
+                    th:classappend="${ItemList.totalPages == ItemList.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#"
+                       th:href="@{/search/list(page=${ItemList.pageable.pageNumber + 1},searchCondition=${searchCondition},searchKeyword=${searchKeyword})}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<script src="/js/main/itemlist.js"></script>
+<script src="/js/main/nav.js"></script>
+
+</body>
+</html>

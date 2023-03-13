@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="/css/main/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/index.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/nav.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <!-- 맨위 말풍선 폰트-->
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" rel="stylesheet">
+    <title>customerService</title>
+    <script src="/js/board.js"></script>
+</head>
+<body>
+<header th:replace="main/header :: main_headerFragment">
+</header>
+<th:with th:value="" th:var="isMine"/>
+<th:with th:value="hrefDisabled" th:var="isNotMine"/>
+
+<section th:class="notice">
+    <div th:class="page-title">
+        <div th:class="container">
+            <h3 th:class="font-weight-bold">고객센터</h3>
+        </div>
+    </div>
+
+    <!-- board seach area -->
+    <div th:id="board-search">
+        <div th:class="container">
+            <div th:class="search-window">
+                <form method="get" th:action="/main/index">
+                    <div th:class="search-wrap">
+                        <label th:class="blind" th:for="search">공지사항 내용 검색</label> <input id="search" name="q"
+                                                                                          placeholder="검색어를 입력해주세요."
+                                                                                          th:value=" "
+                                                                                          type="search">
+                        <button class="btn btn-dark" type="submit">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- board list area -->
+    <div id="board-list">
+        <div class="container">
+            <table class="board-table">
+                <thead>
+                <tr>
+                    <th class="th-num" scope="col">번호</th>
+                    <th class="th-title" scope="col">제목</th>
+                    <th class="th-title" scope="col">작성자</th>
+                    <th class="th-date" scope="col">등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="notice : ${notices}">
+                    <th><a class="cs-detail" onclick="location.href=''"
+                           style="color: red;" th:onclick="'location.href=\''+@{/guest/cs/detail/${notice.id}}'"><i
+                            class="bi bi-megaphone-fill" th:text="${notice.title}"></i> </a></th>
+                    <div th:text="${notice.user.name}"></div>
+                    <div th:text="${notice.createTime}"></div>
+                </tr>
+
+                <!--          <tr th:each="board : ${boards}">-->
+                <!--            <th:choose>-->
+                <!--              <a th:text="${board.content}"/>-->
+                <!--                <div th:text="${board.id}"></div>-->
+                <!--                <th><a class="cs-detail"-->
+                <!--                       onclick="location.href=''" th:onclick="'location.href=\''+@{/guest/cs/detail/${board.id}}'"><i-->
+                <!--                        class="bi bi-lock-fill" th:text="${board.title}" ></i> </a></th>-->
+                <!--              </th:if>-->
+
+                <!--              <th:otherwise>-->
+                <!--                <div th:text="${board.id}"></div>-->
+                <!--                <th><a class="cs-detail"-->
+                <!--                       onclick="location.href='/guest/cs/detail/${board.id}'">${board.title }</a>-->
+                <!--                </th>-->
+                <!--              </th:otherwise>-->
+                <!--            </th:choose>-->
+                <!--          </tr>-->
+
+                <tr th:each="board : ${boards}">
+                    <th:choose>
+                        <th:when test="${board.secret eq 1 }">
+                            <td><a th:value=" ${board.id}"></a></td>
+                            <th><a class="cs-detail" onclick="location.href='/guest/cs/detail/${board.id}'"
+                                   th:text="${board.title }"><i class="bi bi-lock-fill"></i></a></th>
+                        </th:when>
+                        <th:otherwise>
+                            <td><a th:value=" ${board.id}"/></td>
+                            <th><a class="cs-detail" onclick="location.href='/guest/cs/detail/${board.id}'"
+                                   th:text="${board.title }"></a></th>
+                        </th:otherwise>
+                    </th:choose>
+                </tr>
+
+                <tr th:each="board : ${boards}">
+                    <td><a th:text="${board.user.name}"/></td>
+                </tr>
+
+                <tr th:each="board : ${boards}">
+                    <td><a th:text="${board.createTime}"/></td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
+            <!-- 페이지네이션 -->
+            <div style="text-align: center">
+                <div class="pagination">
+
+                    <div style="width: 35%; margin: 5px;">
+                        <th:if th:test="${boards.first ne true}">
+                            <a class="abutton" th:href="/user/cs?page=0">first</a>
+                            <a class="abutton" th:href="/user/cs?page=${boards.number - 1 }">◀</a>
+                        </th:if>
+
+                    </div>
+
+                    <div style="width: 30%; margin: 5px;">
+                        <th:forEach th:items="${pageNums }" th:var="num">
+                            <th:choose>
+                                <th:when th:test="${num eq boards.number}">
+                                    <span th:class=""><a style="font-weight: bold; font-size: 18px;"
+                                                         th:href="/user/cs&&page&&${num}"
+                                                         th:text="${num + 1}"></a></span>
+                                </th:when>
+                                <th:otherwise>
+                                    <span th:class=""><a th:href="/user/cs?page=${num}"
+                                                         th:value="${num + 1}"></a></span>
+                                </th:otherwise>
+                            </th:choose>
+                        </th:forEach>
+                    </div>
+
+                    <div style="width: 35%; margin: 5px;">
+                        <th::if th:test="${boards.last ne true}">
+                            <a th:class="abutton" th:href="/user/cs?page=${boards.number + 1 }">▶</a>
+                            <a th:class="abutton" th:href="/user/cs?page=${boards.totalPages -1 }">last</a>
+                        </th::if>
+                    </div>
+
+                </div>
+            </div>
+            <button id="btn-write"
+                    th:class="custom-sm-btn float-right ${principal.username eq null ? isNotlogin : islogin}">글쓰기
+            </button>
+
+        </div>
+    </div>
+</section>
+
+<nav th:replace="main/nav :: main_navFragment">
+</nav>
+
+<footer th:replace="main/footer :: main_footerFragment">
+</footer>
+</body>
+</html>

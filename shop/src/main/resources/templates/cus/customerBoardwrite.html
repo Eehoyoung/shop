@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <sec:authorize sec:access="isAuthenticated()">
+        <sec:authentication sec:property="principal" sec:var="principal"/>
+    </sec:authorize>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="/css/main/header.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/index.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/footer.css" rel="stylesheet" type="text/css">
+    <link href="/css/main/nav.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <!-- 맨위 말풍선 폰트-->
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+          integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" rel="stylesheet">
+    <title>customerBoardwrite</title>
+    <script src="/js/board.js"></script>
+</head>
+<body>
+<div th:class="container">
+
+    <h2 class="info-txt text-center" id="pTranMsg">문의글 작성</h2>
+    <input id="userId" th:value="${principal.user.id}" type="hidden"> 1 <br/>
+    <div th:class="container">
+        <div th:class="container">
+            <label th:for="title">제목</label> <label>
+
+            <input th:class="form-control" th:id="title" th:name="title" th:type="text" th:value=""/>
+        </label>
+        </div>
+        <br/>
+        <div th:class="container" th:id="dl_tel">
+            <label for="content">내용</label>
+            <div class="contentArea">
+                <textarea class="summernote" id="content" maxlength="11" name="content" type="text"></textarea>
+            </div>
+        </div>
+
+        <th:if th:test="${principal.user.role ne 'ADMIN'}">
+            <div class="container">
+                <br/> <span> 비밀글 check →</span> <input class="m-2" id="secret-check" name="moblAgree" type="checkbox">
+            </div>
+        </th:if>
+    </div>
+
+    <button th:class="custom-sm-btn float-right" th:onclick=|writeBoard()| type="button">
+        <span>저장</span>
+    </button>
+    <br/> <br/> <br/> <br/> <br/>
+</div>
+<nav th:replace="main/nav :: main_navFragment">
+</nav>
+
+<!--footer-->
+<footer th:replace="main/footer :: main_footerFragment">
+</footer>
+</body>
+</html>
