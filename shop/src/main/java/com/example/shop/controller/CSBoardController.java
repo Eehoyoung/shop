@@ -36,7 +36,7 @@ public class CSBoardController {
         model.addAttribute("boards", boards);
         model.addAttribute("pageNums", makePageNumbers(boards));
         model.addAttribute("boards.content", makePageNumbers(boards));
-        return "/cus/customerService";
+        return "cus/customerService";
     }
 
     private ArrayList<Integer> makePageNumbers(Page<CustomServiceBoard> pages) {
